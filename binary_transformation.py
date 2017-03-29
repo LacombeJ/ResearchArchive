@@ -10,6 +10,7 @@ import scipy.misc
 original_dir = "/home/jon-el/Main/CRCV/Spring2017/RV_segmentation/"
 annotation_dir = "/home/jon-el/Main/CRCV/Spring2017/Manual_RV_segmentation/Steven_folder/RV_segmentation/"
 
+#Flip y - hdr files are upside down for some reason?
 def changeShape(img):
     shape = img.shape
     x = shape[0]
@@ -22,15 +23,10 @@ def changeShape(img):
             for S in range(s):
                 for T in range(t):
                     st = S*t + T
-                    ret[S,T,Y,X] = img[X,Y,st,0]
+                    ret[S,T,y-1-Y,X] = img[X,Y,st,0]
     return ret
 
 def getPNum(i):
-    if (i < 10):
-        return "0{}".format(i)
-    return i
-    
-def getXNum(i, z):
     if (i < 10):
         return "0{}".format(i)
     return i
@@ -40,6 +36,7 @@ def checkOrCreateDir(path):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
+print "Performing Binary Transformation"
 for i in range(1,17):
     print "Patient {} / {}".format(i,16)
     p = getPNum(i)
@@ -64,5 +61,5 @@ for i in range(1,17):
             binary_file = binary_dir + binary_name
             img2d = img4d[s,t]
             scipy.misc.imsave(binary_file, img2d)
-            
+print "Done"
 
