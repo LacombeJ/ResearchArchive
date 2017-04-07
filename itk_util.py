@@ -1,7 +1,6 @@
 import numpy as np
-import SimpleITK as sitk
 from scipy import ndimage
-
+import SimpleITK as sitk
 
 #dim3 is set to True because reading a dicom image
 #   returns an image of shape (1,x,y) when we only
